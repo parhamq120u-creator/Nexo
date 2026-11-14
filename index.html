@@ -1,0 +1,795 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b10">
+<title>NEXO | Movie & Series Database</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
+
+:root{
+ --bg:#080b10;
+ --surface:#111820;
+ --surface2:#19232d;
+ --yellow:#ffd43b;
+ --blue:#63cfff;
+ --white:#f6f8fc;
+ --muted:#9caaba;
+ --border:rgba(255,255,255,.09);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+ margin:0;background:var(--bg);color:var(--white);
+ font-family:'Vazirmatn',Tahoma,sans-serif;
+}
+button,input,select{font-family:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+.container{width:min(1200px,92%);margin:auto}
+
+/* HEADER */
+header{
+ position:sticky;top:0;z-index:30;
+ background:rgba(8,11,16,.95);
+ backdrop-filter:blur(16px);
+ border-bottom:1px solid var(--border);
+}
+.nav{
+ min-height:75px;display:flex;align-items:center;
+ justify-content:space-between;gap:20px;
+}
+.logo{font-size:31px;font-weight:900;letter-spacing:3px}
+.logo span{color:var(--yellow)}
+.navlinks{display:flex;gap:22px;color:var(--muted);font-size:13px}
+.navlinks a:hover{color:var(--blue)}
+.nav-label{
+ border:1px solid rgba(255,212,59,.4);
+ color:var(--yellow);padding:7px 12px;
+ border-radius:30px;font-size:11px;
+}
+
+/* HERO */
+.hero{
+ margin:30px auto 35px;min-height:410px;
+ position:relative;overflow:hidden;border-radius:24px;
+ border:1px solid rgba(99,207,255,.2);
+ background:
+ radial-gradient(circle at 85% 20%,rgba(255,212,59,.23),transparent 28%),
+ radial-gradient(circle at 15% 90%,rgba(65,185,255,.24),transparent 35%),
+ linear-gradient(120deg,#101b27,#10131d 55%,#192331);
+ display:flex;align-items:center;padding:50px;
+}
+.hero:after{
+ content:"NEXO";position:absolute;left:-25px;bottom:-75px;
+ font-size:210px;font-weight:900;
+ color:rgba(255,255,255,.025);pointer-events:none;
+}
+.hero-content{position:relative;z-index:2;max-width:650px}
+.eyebrow{color:var(--blue);font-size:13px;font-weight:800;letter-spacing:3px}
+.hero h1{font-size:clamp(40px,6vw,68px);line-height:1.35;margin:12px 0}
+.hero h1 span{color:var(--yellow)}
+.hero p{color:#b7c5d2;line-height:2.2;font-size:15px}
+.main-btn{
+ display:inline-block;margin-top:15px;background:var(--yellow);
+ color:#111;border:0;border-radius:9px;padding:13px 25px;font-weight:900;
+}
+
+/* TITLES */
+.section-title{
+ display:flex;align-items:center;justify-content:space-between;
+ gap:12px;margin-bottom:18px;
+}
+.section-title h2{margin:0;font-size:23px}
+.section-title h2 span{color:var(--yellow)}
+.section-title small{color:var(--muted)}
+.showcase-section{margin:35px auto 55px}
+.showcase{
+ position:relative;overflow:hidden;min-height:320px;
+ border-radius:22px;border:1px solid var(--border);
+ background:#121923;
+}
+.showcase-slide{
+ min-height:320px;padding:35px 45px;
+ display:flex;align-items:center;gap:35px;
+ background:
+ radial-gradient(circle at 80% 50%,var(--glow),transparent 35%),
+ linear-gradient(110deg,var(--cover1),var(--cover2));
+}
+.showcase-poster{
+ width:180px;min-width:180px;height:245px;
+ border-radius:15px;display:flex;align-items:center;
+ justify-content:center;text-align:center;padding:15px;
+ background:linear-gradient(145deg,var(--cover1),var(--cover2));
+ border:1px solid rgba(255,255,255,.25);
+ box-shadow:0 20px 45px rgba(0,0,0,.4);
+ font-size:24px;font-weight:900;
+}
+.showcase-info{max-width:570px}
+.showcase-info .tag{color:var(--yellow);font-size:12px;font-weight:800}
+.showcase-info h3{font-size:32px;margin:10px 0}
+.showcase-info p{color:#d2d9e2;line-height:2;font-size:13px}
+.showcase-meta{color:var(--blue);font-size:13px}
+.showcase-actions{display:flex;gap:10px;flex-wrap:wrap}
+.showcase-actions button{
+ border:0;border-radius:8px;padding:10px 18px;font-weight:800;
+}
+.view{background:var(--yellow);color:#111}
+.next{background:rgba(255,255,255,.12);color:white}
+.showcase-controls{
+ position:absolute;bottom:15px;left:18px;
+ display:flex;gap:8px;align-items:center;z-index:4;
+}
+.showcase-controls button{
+ width:35px;height:35px;border-radius:50%;
+ border:1px solid rgba(255,255,255,.25);
+ color:white;background:rgba(0,0,0,.35);
+}
+.dots{display:flex;gap:6px}
+.dot{width:7px;height:7px;border-radius:20px;background:#66717c}
+.dot.active{width:22px;background:var(--yellow)}
+
+/* STATS */
+.stats{
+ display:grid;grid-template-columns:repeat(3,1fr);
+ gap:15px;margin:35px 0 50px;
+}
+.stat{
+ text-align:center;padding:22px 10px;border-radius:15px;
+ background:linear-gradient(145deg,#17212b,#10161e);
+ border:1px solid var(--border);
+}
+.stat strong{display:block;font-size:30px;color:var(--yellow)}
+.stat:nth-child(2) strong{color:var(--blue)}
+.stat span{font-size:13px;color:var(--muted)}
+
+/* CATALOG */
+.catalog-section{padding-bottom:55px}
+.heading{margin:35px 0 18px}
+.heading h2{margin:0;font-size:25px}
+.heading h2 span{color:var(--yellow)}
+.heading p{color:var(--muted);font-size:13px}
+.tabs{display:flex;gap:9px;flex-wrap:wrap;margin:20px 0}
+.tab{
+ border:1px solid var(--border);background:var(--surface);
+ color:var(--muted);padding:9px 18px;border-radius:30px;font-size:13px;
+}
+.tab.active{background:var(--yellow);color:#101010;border-color:var(--yellow);font-weight:900}
+.filters{
+ display:grid;grid-template-columns:1.6fr 1fr 1fr;
+ gap:12px;margin:20px 0;
+}
+.search,.filter{
+ width:100%;padding:14px 15px;border:1px solid var(--border);
+ background:var(--surface);color:white;border-radius:10px;
+ outline:none;font-size:14px;
+}
+.search:focus,.filter:focus{border-color:var(--blue)}
+.filter option{background:#111820;color:white}
+.result-line{
+ display:flex;justify-content:space-between;
+ align-items:center;margin:25px 0 15px;
+ color:var(--muted);font-size:13px;
+}
+.result-line strong{color:var(--blue)}
+.catalog{
+ display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:19px;
+}
+.card{
+ min-width:0;background:var(--surface);
+ border:1px solid var(--border);border-radius:14px;
+ overflow:hidden;cursor:pointer;transition:.25s;
+}
+.card:hover{
+ transform:translateY(-6px);border-color:var(--yellow);
+ box-shadow:0 14px 35px rgba(0,0,0,.3);
+}
+.poster{
+ height:245px;position:relative;
+ display:flex;align-items:center;justify-content:center;
+ text-align:center;padding:15px;
+ background:linear-gradient(145deg,var(--c1),var(--c2));
+ overflow:hidden;
+}
+.poster:before,.poster:after{
+ content:"";position:absolute;border-radius:50%;
+ border:1px solid rgba(255,255,255,.18);
+}
+.poster:before{width:170px;height:170px;top:-70px;right:-60px}
+.poster:after{width:140px;height:140px;bottom:-60px;left:-40px}
+.poster-name{
+ z-index:1;font-size:21px;font-weight:900;
+ text-shadow:0 4px 15px #000;line-height:1.6;
+}
+.type-label{
+ position:absolute;top:10px;right:10px;z-index:2;
+ background:rgba(0,0,0,.5);border-radius:20px;
+ padding:5px 9px;font-size:10px;
+}
+.rating{
+ position:absolute;bottom:10px;left:10px;z-index:2;
+ background:rgba(0,0,0,.65);color:var(--yellow);
+ padding:5px 9px;border-radius:7px;font-size:12px;
+}
+.card-info{padding:13px}
+.card-info h3{
+ font-size:13px;margin:0 0 8px;
+ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.meta{display:flex;justify-content:space-between;gap:5px;color:var(--muted);font-size:11px}
+.genre{margin-top:10px;color:var(--blue);font-size:11px}
+.empty{
+ grid-column:1/-1;text-align:center;padding:50px;
+ color:var(--muted);background:var(--surface);border-radius:15px;
+}
+
+/* DETAIL */
+.modal{
+ display:none;position:fixed;inset:0;z-index:60;
+ background:rgba(0,0,0,.92);backdrop-filter:blur(12px);
+ padding:18px;overflow-y:auto;
+}
+.modal.show{display:flex;align-items:center;justify-content:center}
+.modal-box{
+ width:min(900px,100%);background:#0d131b;
+ border:1px solid rgba(255,255,255,.08);
+ border-radius:18px;overflow:hidden;position:relative;
+ box-shadow:0 25px 90px rgba(0,0,0,.6);
+}
+.close{
+ position:absolute;left:18px;top:18px;z-index:5;
+ width:40px;height:40px;border:1px solid rgba(255,255,255,.15);
+ border-radius:50%;background:rgba(0,0,0,.5);
+ color:white;font-size:23px;
+}
+.detail-cover{
+ min-height:250px;padding:35px;display:flex;
+ flex-direction:column;justify-content:end;position:relative;
+}
+.detail-cover:before{
+ content:"NEXO";position:absolute;left:10px;bottom:-35px;
+ font-size:110px;font-weight:900;
+ color:rgba(255,255,255,.035);pointer-events:none;
+}
+.detail-type{color:var(--blue);font-size:12px;font-weight:800;margin-bottom:10px}
+.detail-cover h2{font-size:clamp(25px,5vw,40px);margin:0;position:relative}
+.detail-fa{color:var(--yellow);font-size:17px;margin:8px 0 0}
+.detail-content{padding:28px 35px 35px}
+.detail-top{
+ display:flex;align-items:center;justify-content:space-between;
+ gap:15px;flex-wrap:wrap;margin-bottom:28px;
+}
+.detail-rating{display:flex;align-items:center;gap:8px;color:var(--yellow);font-size:14px;font-weight:800}
+.imdb-label{color:#111;background:var(--yellow);border-radius:5px;padding:3px 7px;font-size:11px;font-weight:900}
+.favorite-btn{
+ background:transparent;border:1px solid rgba(255,212,59,.5);
+ color:var(--yellow);border-radius:9px;padding:10px 17px;
+ font-size:13px;font-weight:800;transition:.2s;
+}
+.favorite-btn:hover,.favorite-btn.saved{background:var(--yellow);color:#111}
+.story-heading{font-size:20px;margin:0 0 13px;color:white}
+.story-heading span{color:var(--yellow)}
+.description{
+ color:#c7d1dc;font-size:14px;line-height:2.4;
+ text-align:justify;margin:0;
+}
+.detail-divider{height:1px;background:rgba(255,255,255,.09);margin:28px 0}
+.detail-info-title{font-size:18px;margin:0 0 18px}
+.detail-info{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px 30px}
+.info-row{
+ display:flex;flex-direction:column;gap:5px;
+ padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.07);
+}
+.info-row small{color:var(--muted);font-size:11px}
+.info-row strong{color:#f1f5fa;font-size:13px;line-height:1.9}
+
+/* FOOTER */
+footer{
+ padding:38px 0;text-align:center;
+ border-top:1px solid var(--border);
+ color:var(--muted);font-size:13px;line-height:2;
+}
+.footer-logo{font-size:28px;font-weight:900;letter-spacing:4px;color:var(--yellow)}
+.footer-logo span{color:var(--blue)}
+
+@media(max-width:950px){
+ .catalog{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(max-width:700px){
+ .navlinks{display:none}
+ .hero{padding:30px 22px;min-height:350px}
+ .hero:after{font-size:110px}
+ .stats{gap:8px}
+ .stat{padding:15px 5px}
+ .stat strong{font-size:23px}
+ .stat span{font-size:11px}
+ .filters{grid-template-columns:1fr 1fr}
+ .search{grid-column:1/-1}
+ .catalog{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .poster{height:220px}
+ .showcase-slide{padding:25px 18px;gap:15px;min-height:310px}
+ .showcase-poster{width:110px;min-width:110px;height:175px;font-size:17px}
+ .showcase-info h3{font-size:21px}
+ .showcase-info p{font-size:11px;line-height:1.8}
+ .showcase-controls{bottom:12px}
+ .detail-content{padding:22px 20px 28px}
+}
+@media(max-width:420px){
+ .showcase-slide{gap:10px}
+ .showcase-poster{width:90px;min-width:90px;height:150px;font-size:15px}
+ .showcase-info h3{font-size:17px}
+ .showcase-info p{font-size:10px}
+ .showcase-meta{font-size:10px}
+ .showcase-actions button{padding:8px 10px;font-size:10px}
+ .detail-info{grid-template-columns:1fr}
+ .description{font-size:13px;line-height:2.3}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="container nav">
+  <a href="#" class="logo">NE<span>X</span>O</a>
+  <nav class="navlinks">
+   <a href="#home">خانه</a>
+   <a href="#showcase">ویترین</a>
+   <a href="#catalog">آرشیو</a>
+   <a href="#catalog" onclick="chooseType('movie')">فیلم‌ها</a>
+   <a href="#catalog" onclick="chooseType('series')">سریال‌ها</a>
+  </nav>
+  <div class="nav-label">MOVIE DATABASE</div>
+ </div>
+</header>
+
+<main class="container">
+
+<section class="hero" id="home">
+ <div class="hero-content">
+  <div class="eyebrow">WELCOME TO NEXO</div>
+  <h1>دنیای سینما،<br><span>بدون مرز</span></h1>
+  <p>
+   به NEXO خوش آمدی. اینجا می‌تونی دنیای فیلم‌ها و سریال‌ها رو کشف کنی،
+   داستان آثار رو بخونی، امتیازها رو بررسی کنی و انتخاب بعدی خودت رو پیدا کنی.
+  </p>
+  <a class="main-btn" href="#catalog">ورود به آرشیو ←</a>
+ </div>
+</section>
+
+<section class="showcase-section" id="showcase">
+ <div class="section-title">
+  <h2><span>✦</span> ویترین منتخب NEXO</h2>
+  <small>FEATURED TITLES</small>
+ </div>
+ <div class="showcase" id="showcaseBox">
+  <div class="showcase-slide" id="showcaseSlide"></div>
+  <div class="showcase-controls">
+   <button onclick="moveSlide(-1)">❮</button>
+   <div class="dots" id="dots"></div>
+   <button onclick="moveSlide(1)">❯</button>
+  </div>
+ </div>
+</section>
+
+<section class="stats">
+ <div class="stat"><strong id="movieCount">50</strong><span>فیلم سینمایی</span></div>
+ <div class="stat"><strong id="seriesCount">25</strong><span>سریال</span></div>
+ <div class="stat"><strong id="totalCount">75</strong><span>عنوان در آرشیو</span></div>
+</section>
+
+<section class="catalog-section" id="catalog">
+ <div class="heading">
+  <h2>آرشیو <span>NEXO</span></h2>
+  <p>فیلم و سریال مورد علاقه‌ات رو جست‌وجو کن.</p>
+ </div>
+
+ <div class="tabs">
+  <button class="tab active" data-type="all" onclick="chooseType('all')">همه آثار</button>
+  <button class="tab" data-type="movie" onclick="chooseType('movie')">فیلم‌ها</button>
+  <button class="tab" data-type="series" onclick="chooseType('series')">سریال‌ها</button>
+  <button class="tab" data-type="favorites" onclick="chooseType('favorites')">★ علاقه‌مندی‌ها</button>
+ </div>
+
+ <div class="filters">
+  <input class="search" id="search" type="search" placeholder="جست‌وجوی فارسی یا انگلیسی..." oninput="render()">
+  <select class="filter" id="genre" onchange="render()">
+   <option value="all">همه ژانرها</option>
+  </select>
+  <select class="filter" id="sort" onchange="render()">
+   <option value="default">مرتب‌سازی پیش‌فرض</option>
+   <option value="rating">بالاترین امتیاز</option>
+   <option value="year">جدیدترین سال</option>
+   <option value="oldest">قدیمی‌ترین سال</option>
+   <option value="az">نام فارسی</option>
+  </select>
+ </div>
+
+ <div class="result-line">
+  <span>نتایج آرشیو</span>
+  <strong id="resultCount">۷۵ عنوان</strong>
+ </div>
+ <div class="catalog" id="grid"></div>
+</section>
+</main>
+
+<footer>
+ <div class="footer-logo">NE<span>X</span>O</div>
+ <p>یک پنجره به دنیای فیلم و سریال</p>
+ <p>© 2026 NEXO | All rights reserved</p>
+</footer>
+
+<div class="modal" id="modal" onclick="outsideClose(event)">
+ <div class="modal-box">
+  <button class="close" onclick="closeDetails()">×</button>
+  <div class="detail-cover" id="detailCover">
+   <div class="detail-type" id="detailType"></div>
+   <h2 id="detailTitle"></h2>
+   <div class="detail-fa" id="detailFa"></div>
+  </div>
+  <div class="detail-content">
+   <div class="detail-top">
+    <div class="detail-rating">
+     <span class="imdb-label">IMDb</span>
+     <span id="detailRating"></span>
+    </div>
+    <button class="favorite-btn" id="favoriteBtn" onclick="toggleFavorite()">
+     ☆ افزودن به علاقه‌مندی‌ها
+    </button>
+   </div>
+   <h3 class="story-heading"><span>✦</span> خلاصه داستان</h3>
+   <p class="description" id="detailDesc"></p>
+   <div class="detail-divider"></div>
+   <h3 class="detail-info-title">اطلاعات اثر</h3>
+   <div class="detail-info" id="detailGrid"></div>
+  </div>
+ </div>
+</div>
+
+<script>
+/*
+FORMAT:
+type|English title|Persian title|year|genre|rating|director|cast|runtime|description
+*/
+
+const DATA = `
+movie|The Shawshank Redemption|رستگاری در شاوشنک|1994|درام|9.3|Frank Darabont|Tim Robbins, Morgan Freeman|142 دقیقه|اندی دوفرین، بانکداری موفق، به جرمی که ادعا می‌کند مرتکب نشده محکوم می‌شود و زندگی تازه‌ای را در زندان شاوشنک آغاز می‌کند. او در محیطی سخت و پر از محدودیت، با رد آشنا و دیگر زندانیان ارتباط برقرار می‌کند. اندی با تکیه بر دانش، صبر و امید تلاش می‌کند جایگاه خودش را پیدا کند. این فیلم داستانی درباره دوستی، آزادی، استقامت و حفظ امید در دشوارترین شرایط است.
+movie|The Godfather|پدرخوانده|1972|جنایی|9.2|Francis Ford Coppola|Marlon Brando, Al Pacino|175 دقیقه|خانواده کورلئونه یکی از قدرتمندترین خانواده‌های مافیایی نیویورک است که دون ویتو کورلئونه رهبری آن را بر عهده دارد. وقتی اختلافات میان گروه‌های خلافکار شدت می‌گیرد، خانواده وارد دوره‌ای پرتنش می‌شود. مایکل، پسر جوان خانواده که ابتدا قصد دارد از فعالیت‌های پدرش دور بماند، کم‌کم با واقعیت تازه‌ای روبه‌رو می‌شود. فیلم تصویری از قدرت، خانواده، وفاداری و بهای انتخاب‌ها ارائه می‌دهد.
+movie|The Dark Knight|شوالیه تاریکی|2008|اکشن|9.0|Christopher Nolan|Christian Bale, Heath Ledger|152 دقیقه|گاتهام برای مدتی با تلاش بتمن، کمیسر گوردون و هاروی دنت امیدوار شده است که بتواند با جرم و فساد مقابله کند. اما ورود خلافکاری غیرقابل پیش‌بینی به نام جوکر، نظم شکننده شهر را به چالش می‌کشد. او با نقشه‌هایی پیچیده تلاش می‌کند مردم و قهرمانان شهر را در موقعیت‌های دشوار قرار دهد. داستان درباره مرز میان عدالت و انتقام، مسئولیت و تصمیم‌های اخلاقی است.
+movie|The Godfather Part II|پدرخوانده ۲|1974|جنایی|9.0|Francis Ford Coppola|Al Pacino, Robert De Niro|202 دقیقه|مایکل کورلئونه پس از به دست گرفتن رهبری خانواده، تلاش می‌کند قدرت و نفوذ آن را گسترش دهد. در کنار مسیر او، داستان گذشته ویتو کورلئونه نیز روایت می‌شود؛ مردی که از کودکی در شرایطی دشوار بزرگ شد و قدم‌به‌قدم به جایگاه قدرتمندی رسید. فیلم این دو دوره را کنار هم قرار می‌دهد تا تفاوت نسل‌ها و شکل‌گیری یک امپراتوری را نشان دهد. موضوع اصلی آن قدرت، خانواده، اعتماد و تنهایی است.
+movie|12 Angry Men|۱۲ مرد خشمگین|1957|درام|9.0|Sidney Lumet|Henry Fonda, Lee J. Cobb|96 دقیقه|دوازده عضو هیئت منصفه پس از پایان یک دادگاه در اتاقی جمع می‌شوند تا درباره سرنوشت یک نوجوان تصمیم بگیرند. بیشتر آن‌ها در ابتدا تصور می‌کنند پرونده روشن است و تصمیم‌گیری زمان زیادی نمی‌برد. اما یکی از اعضا درخواست می‌کند شواهد با دقت بیشتری بررسی شوند. گفت‌وگوی میان این افراد به بحثی جدی درباره پیش‌داوری، مسئولیت، منطق و ارزش یک تصمیم منصفانه تبدیل می‌شود.
+movie|Schindler's List|فهرست شیندلر|1993|تاریخی|9.0|Steven Spielberg|Liam Neeson, Ben Kingsley|195 دقیقه|اسکار شیندلر صنعتگری آلمانی است که در جریان جنگ جهانی دوم تلاش می‌کند از شرایط جنگ برای پیشرفت کسب‌وکارش استفاده کند. اما با مشاهده رنج و سرنوشت مردم یهودی، نگاه او به اتفاقات اطرافش تغییر می‌کند. او به‌تدریج تصمیم می‌گیرد از موقعیت و امکانات خود برای نجات جان انسان‌ها کمک بگیرد. فیلم بر پایه رویدادهای تاریخی ساخته شده و درباره وجدان، شجاعت و ارزش زندگی انسان‌هاست.
+movie|Pulp Fiction|داستان عامه‌پسند|1994|جنایی|8.9|Quentin Tarantino|John Travolta, Samuel L. Jackson|154 دقیقه|این فیلم چند داستان به‌ظاهر جداگانه را در دنیای خلافکاران لس‌آنجلس دنبال می‌کند. دو مأمور خلافکار، یک بوکسور، رئیس یک گروه جنایی و شخصیت‌های دیگر هرکدام با اتفاقاتی غیرمنتظره روبه‌رو می‌شوند. مسیر زندگی آن‌ها در موقعیت‌هایی عجیب و گاهی طنزآمیز به هم نزدیک می‌شود. روایت غیرخطی، دیالوگ‌های خاص و شخصیت‌های متفاوت، این اثر را به تجربه‌ای متفاوت در سینمای جنایی تبدیل کرده است.
+movie|The Lord of the Rings: The Return of the King|ارباب حلقه‌ها: بازگشت پادشاه|2003|فانتزی|9.0|Peter Jackson|Elijah Wood, Viggo Mortensen|201 دقیقه|سرنوشت سرزمین میانه به نتیجه سفر فرودو و سم وابسته شده است؛ دو همراهی که باید حلقه یگانه را به مکانی برسانند که امکان نابودی آن وجود دارد. در همین زمان، آراگورن و متحدانش برای مقابله با ارتش سائورون آماده می‌شوند. سرزمین‌های مختلف در آستانه نبردی سرنوشت‌ساز قرار دارند و شخصیت‌ها باید با ترس‌ها و مسئولیت‌های خود روبه‌رو شوند. این فیلم پایان حماسی سه‌گانه‌ای درباره دوستی، فداکاری و امید است.
+movie|Inception|تلقین|2010|علمی تخیلی|8.8|Christopher Nolan|Leonardo DiCaprio, Joseph Gordon-Levitt|148 دقیقه|دام کاب متخصصی است که می‌تواند در دنیای رؤیاهای دیگران به ذهن آن‌ها دسترسی پیدا کند و اطلاعات موردنظر را به دست آورد. او فرصتی پیدا می‌کند تا در ازای انجام مأموریتی بسیار دشوار، امکان بازگشت به زندگی قبلی خود را به دست بیاورد. این بار وظیفه او سرقت اطلاعات نیست، بلکه باید ایده‌ای را در ذهن فرد دیگری شکل دهد. فیلم تماشاگر را وارد دنیایی پیچیده از رؤیا، حافظه، احساسات و واقعیت می‌کند.
+movie|Fight Club|باشگاه مشت‌زنی|1999|درام|8.8|David Fincher|Brad Pitt, Edward Norton|139 دقیقه|راوی داستان مردی است که از زندگی تکراری، شغل اداری و مصرف‌گرایی خسته شده و احساس می‌کند کنترل چندانی بر زندگی خود ندارد. آشنایی او با فردی متفاوت و پرانرژی به نام تایلر دوردن، مسیر زندگی‌اش را تغییر می‌دهد. آن‌ها فضایی مخفی برای دورهمی مردانی ایجاد می‌کنند که به دنبال تجربه‌ای متفاوت هستند. اما این جمع به‌مرور گسترش پیدا می‌کند و پرسش‌هایی درباره هویت، جامعه و خواسته‌های انسان به وجود می‌آورد.
+movie|Interstellar|میان‌ستاره‌ای|2014|علمی تخیلی|8.7|Christopher Nolan|Matthew McConaughey, Anne Hathaway|169 دقیقه|در آینده‌ای که زمین با مشکلات جدی زیست‌محیطی و کمبود منابع روبه‌رو شده، آینده بشر نامطمئن به نظر می‌رسد. کوپر، خلبانی سابق، فرصتی پیدا می‌کند تا همراه گروهی از دانشمندان به سفری فضایی برود و امکان زندگی در سیاره‌ای دیگر را بررسی کند. این مأموریت او را از خانواده‌اش دور می‌کند و با تصمیم‌هایی دشوار روبه‌رو می‌سازد. فیلم ماجرایی علمی درباره زمان، عشق، خانواده و جست‌وجوی آینده‌ای بهتر است.
+movie|The Matrix|ماتریکس|1999|علمی تخیلی|8.7|Lana Wachowski|Keanu Reeves, Laurence Fishburne|136 دقیقه|توماس اندرسون برنامه‌نویسی است که در اینترنت با نام نئو فعالیت می‌کند و احساس می‌کند چیزی در جهان اطرافش درست نیست. آشنایی با گروهی مرموز به رهبری مورفیوس، او را با حقیقتی شگفت‌انگیز درباره واقعیتی که در آن زندگی می‌کند روبه‌رو می‌سازد. نئو باید تصمیم بگیرد آیا حاضر است دانسته‌های قبلی خود را کنار بگذارد و وارد مسیری ناشناخته شود. فیلم درباره واقعیت، آزادی، انتخاب و قدرت فناوری است.
+movie|Goodfellas|رفقای خوب|1990|جنایی|8.7|Martin Scorsese|Ray Liotta, Robert De Niro|145 دقیقه|هنری هیل از دوران نوجوانی مجذوب زندگی خلافکاران محله‌اش بوده و آرزو دارد به بخشی از دنیای آن‌ها تبدیل شود. او به‌تدریج وارد گروهی جنایی می‌شود و در کنار دوستانش تجربه‌هایی از پول، شهرت و قدرت به دست می‌آورد. اما زندگی در این محیط همیشه مطابق انتظار پیش نمی‌رود و تصمیم‌های افراد پیامدهای سنگینی دارند. فیلم تصویری پرجزئیات از جذابیت ظاهری و واقعیت تلخ زندگی مافیایی ارائه می‌کند.
+movie|Se7en|هفت|1995|معمایی|8.6|David Fincher|Brad Pitt, Morgan Freeman|127 دقیقه|دو کارآگاه با تجربه‌های شخصی و دیدگاه‌های متفاوت در یک شهر تاریک و بارانی مشغول بررسی پرونده‌ای غیرعادی می‌شوند. عامل این اتفاقات از مفاهیم هفت گناه کبیره الهام می‌گیرد و نشانه‌هایی حساب‌شده برای پلیس باقی می‌گذارد. هرچه تحقیقات جلوتر می‌رود، پیچیدگی پرونده بیشتر می‌شود و کارآگاهان متوجه می‌شوند با فردی بسیار برنامه‌ریز روبه‌رو هستند. فیلم یک معمای جنایی سنگین درباره عدالت، اخلاق و تاریکی‌های انسانی است.
+movie|The Green Mile|مسیر سبز|1999|درام|8.6|Frank Darabont|Tom Hanks, Michael Clarke Duncan|189 دقیقه|پل اجکامب سال‌ها در بخش زندان مخصوص محکومان به اعدام کار کرده و با افراد مختلفی روبه‌رو شده است. ورود زندانی بزرگی به نام جان کافی، اتفاقی متفاوت را در زندگی او و همکارانش رقم می‌زند. رفتار آرام و توانایی‌های عجیب این زندانی باعث می‌شود نگهبانان درباره شناخت خود از او و حقیقت پرونده‌اش فکر کنند. فیلم داستانی احساسی درباره انسانیت، مهربانی، عدالت و قضاوت‌های عجولانه است.
+movie|The Prestige|پرستیژ|2006|معمایی|8.5|Christopher Nolan|Hugh Jackman, Christian Bale|130 دقیقه|رابرت انجیر و آلفرد بوردن دو شعبده‌باز هستند که پس از همکاری اولیه، به رقیبانی سرسخت تبدیل می‌شوند. هرکدام تلاش می‌کند اجرای بعدی‌اش از دیگری شگفت‌انگیزتر باشد و رازهای حرفه‌ای رقیب را کشف کند. رقابت آن‌ها به‌تدریج از یک اختلاف کاری فراتر می‌رود و زندگی شخصی‌شان را نیز تحت تأثیر قرار می‌دهد. فیلم با روایتی چندلایه درباره جاه‌طلبی، فداکاری و بهای رسیدن به برتری صحبت می‌کند.
+movie|Whiplash|ویپلش|2014|درام|8.5|Damien Chazelle|Miles Teller, J.K. Simmons|106 دقیقه|اندرو نیمن دانشجوی جوان موسیقی است که آرزو دارد به نوازنده‌ای برجسته تبدیل شود. او وارد گروه موسیقی یک استاد بسیار سخت‌گیر می‌شود که روش آموزشی‌اش فشار زیادی بر هنرجویان وارد می‌کند. اندرو برای پیشرفت و جلب رضایت استاد، زمان و انرژی زیادی صرف می‌کند و کم‌کم باید درباره حد و مرز جاه‌طلبی خود فکر کند. فیلم نگاهی پرتنش به استعداد، تمرین، موفقیت و تأثیر فشار روانی بر مسیر پیشرفت دارد.
+movie|Gladiator|گلادیاتور|2000|اکشن|8.5|Ridley Scott|Russell Crowe, Joaquin Phoenix|155 دقیقه|ماکسیموس فرمانده‌ای محبوب در ارتش روم است که پس از تغییرات سیاسی در امپراتوری، جایگاه و زندگی‌اش را از دست می‌دهد. او به‌عنوان یک گلادیاتور وارد میدان‌های مبارزه می‌شود و تلاش می‌کند دوباره اختیار سرنوشت خود را به دست بگیرد. در مسیرش با مردمی روبه‌رو می‌شود که او را به قهرمانی برای خود تبدیل می‌کنند. فیلم داستانی حماسی درباره افتخار، وفاداری، قدرت و جست‌وجوی عدالت است.
+movie|The Departed|رفتگان|2006|جنایی|8.5|Martin Scorsese|Leonardo DiCaprio, Matt Damon|151 دقیقه|در بوستون، پلیس تلاش می‌کند شبکه خلافکاری بزرگی را شناسایی کند و هم‌زمان یک مأمور مخفی را به درون آن می‌فرستد. از سوی دیگر، یکی از افراد گروه خلافکار نیز در ساختار پلیس نفوذ کرده است. هر دو طرف به دنبال شناسایی جاسوس هستند و هر اشتباه می‌تواند موقعیت آن‌ها را آشکار کند. فیلم یک بازی پیچیده از هویت‌های پنهان، اعتماد، خیانت و فشار زندگی دوگانه را روایت می‌کند.
+movie|Joker|جوکر|2019|درام|8.3|Todd Phillips|Joaquin Phoenix, Robert De Niro|122 دقیقه|آرتور فلک در شهری بزرگ زندگی می‌کند و آرزو دارد به‌عنوان یک کمدین دیده شود. او با مشکلات شخصی، فشارهای اقتصادی و بی‌توجهی جامعه دست‌وپنجه نرم می‌کند و تلاش دارد ارتباط خود را با دیگران حفظ کند. مجموعه‌ای از اتفاقات و برخوردهای تلخ، نگاه او به زندگی و جامعه را تغییر می‌دهد. فیلم تصویری شخصیت‌محور از تنهایی، نابرابری اجتماعی و شکل‌گیری یک چهره مشهور در دنیای گاتهام است.
+movie|Ford v Ferrari|فورد در برابر فراری|2019|ورزشی|8.1|James Mangold|Matt Damon, Christian Bale|152 دقیقه|شرکت فورد تصمیم می‌گیرد با ساخت خودرویی مسابقه‌ای، در رقابت معتبر لمانز از فراری پیشی بگیرد. برای این هدف، کارول شلبی طراح و مهندس خودرو و کن مایلز راننده‌ای باتجربه وارد پروژه می‌شوند. آن‌ها باید در کنار مشکلات فنی، اختلاف‌های مدیریتی و فشار زمان نیز کار کنند. فیلم داستانی درباره مهندسی، دوستی، رقابت و تلاش برای رسیدن به هدفی بزرگ در دنیای مسابقات اتومبیل‌رانی است.
+movie|The Wolf of Wall Street|گرگ وال استریت|2013|زندگی‌نامه|8.2|Martin Scorsese|Leonardo DiCaprio, Jonah Hill|180 دقیقه|جردن بلفورت جوان وارد بازار بورس می‌شود و پس از تجربه فراز و نشیب‌های اولیه، شرکت سرمایه‌گذاری خودش را راه‌اندازی می‌کند. او با روش‌های فروش تهاجمی و سبک زندگی پرزرق‌وبرق به ثروت و شهرت زیادی می‌رسد. اما گسترش فعالیت‌هایش توجه نهادهای نظارتی را جلب می‌کند و زندگی حرفه‌ای او وارد مرحله‌ای تازه می‌شود. فیلم بر اساس زندگی واقعی او ساخته شده و نگاهی انتقادی به طمع، پول و افراط دارد.
+movie|The Social Network|شبکه اجتماعی|2010|زندگی‌نامه|7.8|David Fincher|Jesse Eisenberg, Andrew Garfield|120 دقیقه|مارک زاکربرگ دانشجوی دانشگاه هاروارد است که پس از یک تجربه شخصی، ایده ساخت شبکه‌ای اجتماعی را دنبال می‌کند. پروژه اولیه او به‌سرعت گسترش می‌یابد و توجه افراد زیادی را جلب می‌کند. با رشد شرکت، اختلاف‌هایی درباره مالکیت ایده، سهم شرکا و مسیر آینده کسب‌وکار شکل می‌گیرد. فیلم روند تبدیل یک پروژه دانشجویی به شرکتی بزرگ را همراه با چالش‌های دوستی، جاه‌طلبی و موفقیت روایت می‌کند.
+movie|The Pursuit of Happyness|در جست‌وجوی خوشبختی|2006|زندگی‌نامه|8.0|Gabriele Muccino|Will Smith, Jaden Smith|117 دقیقه|کریس گاردنر فروشنده‌ای است که با مشکلات مالی و شرایط خانوادگی دشواری روبه‌رو شده است. او مسئولیت مراقبت از پسر کوچکش را بر عهده دارد و در عین حال تلاش می‌کند فرصتی برای ورود به دنیای مشاوره مالی پیدا کند. یک دوره کارآموزی سخت و رقابتی، آینده او را به تلاش و پشتکارش وابسته می‌کند. فیلم بر اساس زندگی واقعی گاردنر ساخته شده و درباره امید، مسئولیت‌پذیری و ادامه دادن در روزهای سخت است.
+movie|The Intern|کارآموز|2015|کمدی|7.1|Nancy Meyers|Robert De Niro, Anne Hathaway|121 دقیقه|بن ویتاکر مردی بازنشسته است که پس از سال‌ها تجربه کاری، احساس می‌کند هنوز چیزهای زیادی برای تجربه کردن دارد. او در برنامه کارآموزی سالمندان یک شرکت فروش اینترنتی پذیرفته می‌شود و با محیطی مدرن و پرسرعت روبه‌رو می‌شود. ارتباط او با مدیر جوان شرکت، جولز، به‌تدریج از یک رابطه کاری ساده فراتر می‌رود. فیلم درباره تفاوت نسل‌ها، تجربه، دوستی و تعادل میان کار و زندگی است.
+movie|The Martian|مریخی|2015|علمی تخیلی|8.0|Ridley Scott|Matt Damon, Jessica Chastain|144 دقیقه|مارک واتنی فضانوردی است که پس از یک حادثه در مریخ، از گروه خود جدا می‌شود و دیگران تصور می‌کنند او جانش را از دست داده است. او متوجه می‌شود باید برای مدتی طولانی به‌تنهایی در سیاره سرخ دوام بیاورد و از دانش علمی خود برای حل مشکلات استفاده کند. در زمین نیز گروهی از متخصصان تلاش می‌کنند راهی برای برقراری ارتباط و بازگرداندن او پیدا کنند. فیلم ترکیبی از علم، طنز، خلاقیت و اراده انسانی است.
+movie|Django Unchained|جانگوی رهاشده|2012|وسترن|8.5|Quentin Tarantino|Jamie Foxx, Christoph Waltz|165 دقیقه|جانگو برده‌ای آزادشده است که با یک شکارچی جایزه‌بگیر آلمانی آشنا می‌شود. آن دو در مسیر همکاری خود، به دنبال یافتن افرادی هستند که جانگو را به هدف شخصی‌اش نزدیک می‌کنند. سفرشان آن‌ها را به مزرعه‌ای بزرگ در جنوب آمریکا می‌رساند؛ جایی که همسر جانگو در آن نگهداری می‌شود. فیلم وسترنی درباره آزادی، عدالت و تلاش برای بازپس‌گیری زندگی است که با سبک خاص تارانتینو روایت می‌شود.
+movie|Shutter Island|جزیره شاتر|2010|معمایی|8.2|Martin Scorsese|Leonardo DiCaprio, Mark Ruffalo|138 دقیقه|تدی دنیلز و همکارش برای بررسی ناپدید شدن بیماری از یک آسایشگاه روانی به جزیره‌ای دورافتاده می‌روند. شرایط آب‌وهوایی و فضای بسته جزیره، انجام تحقیقات را دشوار می‌کند. با پرس‌وجو از کارکنان و بیماران، آن‌ها با اطلاعاتی روبه‌رو می‌شوند که با روایت اولیه پرونده هماهنگ نیست. فیلم معمایی روان‌شناختی درباره حافظه، حقیقت و برداشت انسان از اتفاقات اطرافش است.
+movie|The Truman Show|نمایش ترومن|1998|درام|8.2|Peter Weir|Jim Carrey, Laura Linney|103 دقیقه|ترومن بربنک مردی معمولی است که در شهری آرام زندگی می‌کند و تصور می‌کند همه‌چیز مطابق روال طبیعی پیش می‌رود. او دوستان، همسر و شغلی ثابت دارد، اما به‌تدریج با اتفاقات عجیبی روبه‌رو می‌شود که شک او را نسبت به محیط اطراف افزایش می‌دهند. تلاش برای پیدا کردن پاسخ، او را به پرسش‌هایی درباره آزادی و هویت می‌رساند. فیلم با طنز و احساس، رابطه رسانه، واقعیت و زندگی شخصی را بررسی می‌کند.
+movie|Mad Max: Fury Road|مکس دیوانه: جاده خشم|2015|اکشن|8.1|George Miller|Tom Hardy, Charlize Theron|120 دقیقه|در آینده‌ای بیابانی و کم‌آب، گروه‌های مختلف برای دسترسی به منابع محدود با یکدیگر رقابت می‌کنند. مکس در شرایطی ناخواسته وارد سفری پرخطر می‌شود که امپراتور فیوریوسا و گروهی از زنان نیز در مرکز آن قرار دارند. هدف آن‌ها رسیدن به مکانی امن و دور شدن از سلطه یک فرمانروای قدرتمند است. فیلم یک ماجرای پرسرعت و تصویری درباره بقا، آزادی و همکاری در جهانی بی‌رحم است.
+movie|Arrival|ورود|2016|علمی تخیلی|7.9|Denis Villeneuve|Amy Adams, Jeremy Renner|116 دقیقه|پس از ظاهر شدن سفینه‌هایی ناشناخته در نقاط مختلف زمین، دولت‌ها برای فهمیدن هدف حضور آن‌ها تلاش می‌کنند. لوئیز بنکس، زبان‌شناسی متخصص، برای برقراری ارتباط با موجودات فضایی انتخاب می‌شود. او باید در کنار یک دانشمند دیگر زبان پیچیده آن‌ها را بررسی کند و از شکل‌گیری تنش میان کشورها جلوگیری شود. فیلم اثری آرام و فکری درباره زبان، ارتباط، زمان و شیوه درک انسان از جهان است.
+movie|Prisoners|زندانیان|2013|معمایی|8.2|Denis Villeneuve|Hugh Jackman, Jake Gyllenhaal|153 دقیقه|در یک روز عادی، دو دختر خردسال ناپدید می‌شوند و خانواده‌هایشان وارد شرایطی نگران‌کننده می‌شوند. کارآگاهی به نام لوکی مسئول بررسی پرونده است، اما سرنخ‌ها محدود و زمان بسیار مهم است. یکی از پدرها که از روند تحقیقات ناامید شده، تلاش می‌کند خودش پاسخ‌هایی پیدا کند. فیلم یک درام جنایی پرتنش درباره ترس، خانواده، عدالت و مرزهای اخلاقی در شرایط بحرانی است.
+movie|Baby Driver|بیبی راننده|2017|اکشن|7.5|Edgar Wright|Ansel Elgort, Kevin Spacey|113 دقیقه|بیبی راننده‌ای جوان و بسیار ماهر است که برای گروهی خلافکار در فرار پس از سرقت‌ها کار می‌کند. او برای تمرکز هنگام رانندگی همیشه به موسیقی گوش می‌دهد و ریتم آهنگ‌ها بخشی از سبک زندگی‌اش شده است. آشنایی با دختری به نام دبورا باعث می‌شود به آینده‌ای متفاوت فکر کند و بخواهد از محیط قبلی فاصله بگیرد. فیلم ترکیبی از تعقیب‌وگریز، موسیقی، عشق و تلاش برای شروعی تازه است.
+movie|Nightcrawler|شبگرد|2014|جنایی|7.8|Dan Gilroy|Jake Gyllenhaal, Rene Russo|117 دقیقه|لو بلوم مردی بیکار و جاه‌طلب در لس‌آنجلس است که به‌طور اتفاقی با دنیای فیلم‌برداری حوادث شبانه آشنا می‌شود. او تصمیم می‌گیرد با دوربین خود اتفاقات جنایی و اضطراری را ثبت کند و تصاویر را به شبکه‌های خبری بفروشد. هرچه موفقیت بیشتری به دست می‌آورد، نگاهش به مرزهای اخلاقی حرفه‌اش تغییر می‌کند. فیلم نقدی بر رسانه، رقابت برای جذب مخاطب و تأثیر جاه‌طلبی بی‌حدومرز است.
+movie|The Grand Budapest Hotel|هتل بزرگ بوداپست|2014|کمدی|8.1|Wes Anderson|Ralph Fiennes, Tony Revolori|99 دقیقه|در یک هتل مشهور اروپایی، گوستاو مدیر خوش‌سلیقه و باتجربه‌ای است که رابطه نزدیکی با کارکنان و مهمانان دارد. او با شاگرد جوانی به نام زیرو آشنا می‌شود و این دو درگیر ماجرایی درباره یک میراث ارزشمند و اختلافات خانوادگی می‌شوند. اتفاقات غیرمنتظره آن‌ها را وارد سفری پر از شخصیت‌های عجیب و موقعیت‌های طنزآمیز می‌کند. فیلم با فضای بصری خاص خود درباره دوستی، وفاداری و خاطره روزگار گذشته است.
+movie|Knives Out|چاقوکشی|2019|معمایی|7.9|Rian Johnson|Daniel Craig, Ana de Armas|130 دقیقه|پس از مرگ نویسنده‌ای ثروتمند در خانه بزرگ خانوادگی‌اش، اعضای خانواده برای پاسخ‌گویی به پرسش‌های پلیس گرد هم می‌آیند. یک کارآگاه خصوصی مشهور مأمور می‌شود ماجرا را بررسی کند و با روایت‌های متفاوت افراد خانواده روبه‌رو می‌شود. هر شخصیت انگیزه‌ها و رازهای خودش را دارد و هیچ‌چیز در نگاه اول ساده به نظر نمی‌رسد. فیلم یک معمای سرگرم‌کننده درباره خانواده، پول و حقیقت است.
+movie|The Imitation Game|بازی تقلید|2014|زندگی‌نامه|8.0|Morten Tyldum|Benedict Cumberbatch, Keira Knightley|114 دقیقه|در جریان جنگ جهانی دوم، آلن تورینگ ریاضیدان و گروهی از متخصصان مأمور می‌شوند رمز پیام‌های نظامی آلمان را کشف کنند. آن‌ها روی ساخت دستگاهی کار می‌کنند که بتواند حجم بزرگی از حالت‌های رمزگذاری را بررسی کند. همکاری گروه، فشار زمانی و چالش‌های شخصی تورینگ بخشی از مسیر دشوار آن‌هاست. فیلم بر اساس زندگی واقعی او ساخته شده و نقش علم، خلاقیت و همکاری را در تاریخ فناوری نشان می‌دهد.
+movie|Top Gun: Maverick|تاپ گان: ماوریک|2022|اکشن|8.2|Joseph Kosinski|Tom Cruise, Miles Teller|130 دقیقه|پیت ماوریک میچل پس از سال‌ها فعالیت به‌عنوان خلبان آزمایشی، برای آموزش گروهی از خلبانان نخبه به مرکز تاپ گان بازمی‌گردد. مأموریت پیش رو به مهارت و هماهنگی بسیار بالایی نیاز دارد و زمان آموزش محدود است. حضور بردلی، پسر دوست قدیمی ماوریک، خاطرات و اختلافات گذشته را دوباره زنده می‌کند. فیلم درباره مسئولیت، اعتماد، تجربه و نسل تازه خلبانان است.
+movie|The Batman|بتمن|2022|اکشن|7.8|Matt Reeves|Robert Pattinson, Zoe Kravitz|176 دقیقه|بروس وین در سال‌های ابتدایی فعالیت خود به‌عنوان بتمن، در گاتهام با پرونده‌ای پیچیده روبه‌رو می‌شود. فردی مرموز به نام ریدلر افراد بانفوذ شهر را هدف قرار داده و سرنخ‌هایی برای بتمن باقی می‌گذارد. تحقیقات او را به لایه‌های پنهان فساد و گذشته خانواده‌های قدرتمند می‌رساند. این نسخه فضایی کارآگاهی و تاریک دارد و بر تلاش بروس برای شناخت معنای واقعی عدالت تمرکز می‌کند.
+movie|Dune: Part Two|تلماسه: بخش دوم|2024|علمی تخیلی|8.5|Denis Villeneuve|Timothee Chalamet, Zendaya|166 دقیقه|پل آتریدیس پس از اتفاقات بخش نخست، در میان مردم فرمن آراکیس زندگی می‌کند و با فرهنگ و شیوه زندگی آن‌ها آشنا می‌شود. او به همراه چانی و دیگر متحدانش مسیر تازه‌ای را آغاز می‌کند و باید درباره آینده خود تصمیم بگیرد. رقابت قدرت‌های بزرگ بر سر سیاره و منبع ارزشمند آن همچنان ادامه دارد. فیلم ادامه‌ای حماسی درباره سرنوشت، رهبری، ایمان و پیامدهای قدرت است.
+movie|Oppenheimer|اوپنهایمر|2023|زندگی‌نامه|8.3|Christopher Nolan|Cillian Murphy, Emily Blunt|180 دقیقه|جی رابرت اوپنهایمر فیزیکدانی برجسته است که در دوران جنگ جهانی دوم به رهبری پروژه‌ای علمی و محرمانه دعوت می‌شود. گروهی از دانشمندان در شرایطی حساس روی فناوری‌ای کار می‌کنند که می‌تواند تاریخ جهان را تغییر دهد. پس از پایان پروژه، پیامدهای سیاسی، علمی و اخلاقی تصمیم‌های آن‌ها همچنان ادامه پیدا می‌کند. فیلم زندگی حرفه‌ای اوپنهایمر و کشمکش میان علم، قدرت و مسئولیت انسانی را روایت می‌کند.
+movie|Parasite|انگل|2019|درام|8.5|Bong Joon Ho|Song Kang-ho, Choi Woo-shik|132 دقیقه|خانواده کیم در شرایط اقتصادی دشواری زندگی می‌کنند و هرکدام به دنبال راهی برای بهتر کردن وضعیت خود هستند. فرصتی برای ورود به خانه خانواده‌ای ثروتمند، زندگی آن‌ها را وارد مسیری غیرمنتظره می‌کند. روابط میان دو خانواده به‌تدریج پیچیده‌تر می‌شود و تفاوت طبقاتی نقش مهمی در اتفاقات دارد. فیلم با ترکیبی از طنز، درام و تعلیق درباره فاصله اجتماعی، پول و رفتار انسان‌ها صحبت می‌کند.
+movie|Logan|لوگان|2017|اکشن|8.1|James Mangold|Hugh Jackman, Patrick Stewart|137 دقیقه|در آینده‌ای متفاوت، لوگان زندگی آرام و دور از گذشته قهرمانانه خود را می‌گذراند و از پروفسور ایکس مراقبت می‌کند. ورود دختری جوان با توانایی‌هایی ویژه، او را دوباره وارد ماجرایی دشوار می‌کند. لوگان باید از او محافظت کند و با بخش‌هایی از گذشته خود روبه‌رو شود. فیلم اثری شخصیت‌محور درباره خانواده، مسئولیت، پیری و معنای قهرمان بودن است.
+movie|John Wick|جان ویک|2014|اکشن|7.4|Chad Stahelski|Keanu Reeves, Michael Nyqvist|101 دقیقه|جان ویک مردی است که پس از کنار گذاشتن زندگی حرفه‌ای گذشته‌اش تلاش می‌کند روزهای آرامی داشته باشد. یک اتفاق تلخ باعث می‌شود دوباره با دنیایی روبه‌رو شود که سال‌ها از آن فاصله گرفته بود. او به‌تدریج متوجه می‌شود گذشته‌اش هنوز بخش مهمی از زندگی اوست و افراد زیادی او را می‌شناسند. فیلم آغاز مجموعه‌ای اکشن درباره شخصیت مرموز جان ویک و دنیای زیرزمینی خلافکاران است.
+movie|Edge of Tomorrow|لبه فردا|2014|علمی تخیلی|7.9|Doug Liman|Tom Cruise, Emily Blunt|113 دقیقه|در آینده‌ای نزدیک، زمین درگیر جنگی بزرگ با موجوداتی بیگانه شده است. ویلیام کیج، افسری که تجربه زیادی در میدان نبرد ندارد، به مأموریتی فرستاده می‌شود و با پدیده‌ای عجیب روبه‌رو می‌شود که زمان را برای او تکرار می‌کند. او در کنار ریتا وراتاسکی تلاش می‌کند از این فرصت غیرعادی برای تغییر نتیجه جنگ استفاده کند. فیلم ترکیبی از علمی‌تخیلی، اکشن و یادگیری از اشتباهات است.
+movie|Source Code|کد منبع|2011|علمی تخیلی|7.5|Duncan Jones|Jake Gyllenhaal, Michelle Monaghan|93 دقیقه|کاپیتان کولتر استیونز در برنامه‌ای آزمایشی شرکت می‌کند که به او اجازه می‌دهد در شبیه‌سازی چند دقیقه پایانی زندگی مسافران یک قطار حضور پیدا کند. هدف او شناسایی فردی است که مسئول یک حادثه بزرگ بوده است. هر بار که مأموریت تکرار می‌شود، اطلاعات تازه‌ای به دست می‌آورد و به ارتباطات انسانی اطرافش توجه بیشتری می‌کند. فیلم معمایی علمی درباره زمان، هویت و تصمیم‌های کوچک با پیامدهای بزرگ است.
+movie|The Big Short|رکود بزرگ|2015|زندگی‌نامه|7.8|Adam McKay|Christian Bale, Steve Carell|130 دقیقه|در سال‌های پیش از بحران مالی ۲۰۰۸، چند سرمایه‌گذار متوجه نشانه‌هایی می‌شوند که بسیاری از فعالان بازار آن‌ها را جدی نمی‌گیرند. آن‌ها با بررسی وام‌های مسکن و ساختار پیچیده بازار، احتمال وقوع یک بحران بزرگ را پیش‌بینی می‌کنند. اما قانع کردن دیگران درباره این خطر کار ساده‌ای نیست و تصمیم‌هایشان با مخالفت روبه‌رو می‌شود. فیلم با زبانی سرگرم‌کننده مفاهیم مالی و پیامدهای تصمیم‌های اقتصادی را توضیح می‌دهد.
+movie|Everything Everywhere All at Once|همه‌چیز همه‌جا به یکباره|2022|علمی تخیلی|7.7|Daniel Kwan|Michelle Yeoh, Ke Huy Quan|139 دقیقه|اِولین زنی است که میان مشکلات کاری، اختلاف‌های خانوادگی و مسئولیت‌های روزمره گرفتار شده است. در جریان اتفاقی عجیب، او با نسخه‌های متفاوتی از خودش در جهان‌های موازی ارتباط پیدا می‌کند. این تجربه او را وارد مأموریتی می‌کند که در آن باید توانایی‌های غیرمنتظره‌ای را کشف کند. فیلم ترکیبی پرانرژی از کمدی، علمی‌تخیلی و درام خانوادگی درباره انتخاب‌ها و ارتباط انسان‌هاست.
+movie|Spider-Man: Across the Spider-Verse|مرد عنکبوتی: در میان دنیای عنکبوتی|2023|انیمیشن|8.5|Joaquim Dos Santos|Shameik Moore, Hailee Steinfeld|140 دقیقه|مایلز مورالز پس از تجربه‌های قبلی خود تلاش می‌کند زندگی روزمره و مسئولیت‌های مرد عنکبوتی بودن را متعادل نگه دارد. دیدار دوباره با گوئن او را وارد سفری میان جهان‌های مختلف می‌کند؛ جایی که قهرمانان عنکبوتی زیادی حضور دارند. مایلز با دیدگاه‌های متفاوتی درباره وظیفه یک قهرمان روبه‌رو می‌شود و باید راه خودش را پیدا کند. فیلم درباره هویت، خانواده، انتخاب و پذیرفتن تفاوت‌هاست.
+movie|The Revenant|از گور برخاسته|2015|ماجراجویی|8.0|Alejandro G. Inarritu|Leonardo DiCaprio, Tom Hardy|156 دقیقه|هیو گلس شکارچی و راهنمای گروهی از کاوشگران در طبیعت سرد و دشوار آمریکای شمالی است. پس از یک حادثه، او از همراهانش جدا می‌شود و در شرایطی بسیار سخت باید راهی برای بازگشت پیدا کند. طبیعت، سرمای شدید و اختلافات میان اعضای گروه مسیر او را پیچیده‌تر می‌کنند. فیلم ماجرایی بقا محور درباره اراده، تحمل سختی و رابطه انسان با طبیعت است.
+
+/* SERIES */
+
+series|Breaking Bad|بریکینگ بد|2008|جنایی|9.5|Vince Gilligan|Bryan Cranston, Aaron Paul|5 فصل|والتر وایت معلم شیمی دبیرستانی است که زندگی معمولی‌اش با مشکلات مالی و نگرانی‌های خانوادگی همراه شده است. پس از روبه‌رو شدن با یک بحران شخصی، او تصمیمی می‌گیرد که مسیر زندگی‌اش را کاملاً تغییر می‌دهد. همکاری با دانش‌آموز سابقش جسی پینکمن، او را وارد دنیایی می‌کند که قوانین و خطرات خودش را دارد. سریال به‌تدریج تغییر شخصیت والتر و پیامدهای انتخاب‌هایش را در قالب داستانی پرتعلیق دنبال می‌کند.
+series|Game of Thrones|بازی تاج‌وتخت|2011|فانتزی|9.2|David Benioff|Emilia Clarke, Kit Harington|8 فصل|در سرزمین وستروس، خاندان‌های قدرتمند برای نفوذ سیاسی و رسیدن به تخت آهنین با یکدیگر رقابت می‌کنند. اتحادها شکل می‌گیرند و با تغییر شرایط از هم می‌پاشند و هر خانواده برنامه‌ای برای آینده خود دارد. در شمال نیز تهدیدی قدیمی در حال نزدیک شدن است که می‌تواند تمام سرزمین را تحت تأثیر قرار دهد. سریال دنیایی گسترده از سیاست، جنگ، شخصیت‌های پیچیده و تصمیم‌های سرنوشت‌ساز خلق می‌کند.
+series|Chernobyl|چرنوبیل|2019|تاریخی|9.3|Johan Renck|Jared Harris, Stellan Skarsgard|1 فصل|در آوریل ۱۹۸۶، انفجاری در نیروگاه هسته‌ای چرنوبیل رخ می‌دهد و منطقه اطراف آن با بحرانی بی‌سابقه روبه‌رو می‌شود. دانشمندان، نیروهای امدادی و مسئولان باید در شرایطی دشوار ابعاد حادثه را بررسی کنند و از گسترش پیامدهای آن جلوگیری کنند. در کنار تلاش‌های فنی، پنهان‌کاری و تصمیم‌های اداری نیز روند مدیریت بحران را پیچیده می‌کند. این مینی‌سریال بر اساس رویدادهای واقعی ساخته شده و درباره مسئولیت، حقیقت و هزینه خطاهای انسانی است.
+series|Dark|دارک|2017|علمی تخیلی|8.7|Baran bo Odar|Louis Hofmann, Lisa Vicari|3 فصل|در شهر کوچکی به نام ویندن، ناپدید شدن یک کودک باعث می‌شود خانواده‌ها و ساکنان شهر با رازهایی قدیمی روبه‌رو شوند. تحقیقات به‌تدریج ارتباط‌هایی عجیب میان چند نسل از خانواده‌ها را آشکار می‌کند. گذشته و حال در این داستان به شکلی پیچیده به هم پیوند می‌خورند و هر پاسخ پرسش‌های تازه‌ای ایجاد می‌کند. دارک سریالی معمایی و علمی‌تخیلی است که تماشاگر را به دقت در جزئیات و ارتباط شخصیت‌ها دعوت می‌کند.
+series|The Boys|پسران|2019|اکشن|8.6|Eric Kripke|Karl Urban, Jack Quaid|4 فصل|در جهانی که ابرقهرمانان به چهره‌هایی مشهور و محبوب تبدیل شده‌اند، شرکت بزرگی مدیریت تصویر و فعالیت‌های آن‌ها را بر عهده دارد. اما پشت ظاهر قهرمانانه برخی از این افراد، رفتارهایی وجود دارد که با انتظارات جامعه فاصله زیادی دارد. گروهی از مردم تصمیم می‌گیرند این واقعیت‌ها را آشکار کنند و با قدرت‌های بزرگ مقابله کنند. سریال با طنزی تلخ، شهرت، تجارت، رسانه و مفهوم قهرمان بودن را زیر سؤال می‌برد.
+series|Peaky Blinders|پیکی بلایندرز|2013|جنایی|8.7|Steven Knight|Cillian Murphy, Paul Anderson|6 فصل|در بیرمنگام پس از جنگ جهانی اول، خانواده شلبی با رهبری توماس تلاش می‌کند کسب‌وکار و نفوذ خود را گسترش دهد. آن‌ها با رقبای خیابانی، پلیس و چهره‌های سیاسی روبه‌رو می‌شوند و هر تصمیم می‌تواند آینده خانواده را تغییر دهد. توماس شخصیتی باهوش و حسابگر است که برای رسیدن به اهدافش برنامه‌های بلندمدت طراحی می‌کند. سریال درباره جاه‌طلبی، خانواده، قدرت و تغییرات جامعه در دوران پس از جنگ است.
+series|Stranger Things|چیزهای عجیب|2016|علمی تخیلی|8.6|The Duffer Brothers|Millie Bobby Brown, Finn Wolfhard|4 فصل|در شهر کوچک هاوکینز، ناپدید شدن پسری نوجوان باعث نگرانی خانواده و دوستانش می‌شود. گروهی از بچه‌ها در جریان جست‌وجو با دختری مرموز آشنا می‌شوند که توانایی‌های غیرعادی دارد. هم‌زمان، آزمایش‌های محرمانه یک مرکز تحقیقاتی و اتفاقات عجیب اطراف شهر به هم مرتبط به نظر می‌رسند. سریال ترکیبی از ماجراجویی، دوستی، رازهای علمی و فضای نوستالژیک دهه هشتاد میلادی است.
+series|Sherlock|شرلوک|2010|معمایی|9.1|Mark Gatiss|Benedict Cumberbatch, Martin Freeman|4 فصل|شرلوک هولمز کارآگاهی باهوش و غیرمعمول است که در لندن امروزی زندگی می‌کند و از توانایی مشاهده جزئیات برای حل پرونده‌ها استفاده می‌کند. آشنایی او با دکتر جان واتسون، پزشک نظامی سابق، آغاز همکاری‌ای متفاوت می‌شود. آن‌ها در پرونده‌های مختلف با سرنخ‌های پیچیده و افراد مرموز روبه‌رو می‌شوند. سریال داستان کلاسیک شرلوک هولمز را با فناوری و فضای زندگی مدرن ترکیب می‌کند.
+series|The Last of Us|آخرین بازمانده از ما|2023|درام|8.7|Craig Mazin|Pedro Pascal, Bella Ramsey|2 فصل|پس از شیوع عفونتی گسترده، جامعه انسانی دچار فروپاشی شده و بازماندگان در مناطق کنترل‌شده یا محیط‌های خطرناک زندگی می‌کنند. جوئل مردی است که پس از تجربه‌های دشوار گذشته، مأمور همراهی دختری نوجوان به نام الی می‌شود. سفر آن‌ها از میان شهرها و مناطق مختلف، رابطه‌ای تازه میان این دو شکل می‌دهد. سریال علاوه بر فضای بقا، درباره اعتماد، خانواده انتخابی و پیوندهای انسانی است.
+series|Money Heist|سرقت پول|2017|جنایی|8.2|Alex Pina|Alvaro Morte, Ursula Corbero|5 بخش|مردی مرموز با لقب پروفسور گروهی از افراد با مهارت‌های متفاوت را برای اجرای نقشه‌ای بزرگ گرد هم می‌آورد. هدف نخست آن‌ها ورود به ضرابخانه سلطنتی اسپانیا و مدیریت عملیاتی پیچیده است. اعضای گروه باید طبق برنامه پیش بروند، در حالی که پلیس تلاش می‌کند هویت و هدف آن‌ها را کشف کند. سریال با شخصیت‌های متعدد، روابط انسانی و تغییرات پی‌درپی، یک داستان سرقت پرتعلیق را روایت می‌کند.
+series|From|فرام|2022|ترسناک|7.8|John Griffin|Harold Perrineau, Catalina Moreno|3 فصل|مسافرانی که وارد شهری کوچک و ناشناخته می‌شوند، متوجه می‌شوند خروج از آن به‌سادگی ممکن نیست. ساکنان شهر سال‌هاست تلاش می‌کنند راهی برای بازگشت به زندگی عادی پیدا کنند و در عین حال با قوانین عجیب محیط کنار بیایند. ورود افراد تازه، پرسش‌های بیشتری درباره منشأ شهر و اتفاقات آن ایجاد می‌کند. فرام سریالی رازآلود و ترسناک است که بر فضای ناشناخته، روابط میان ساکنان و تلاش برای یافتن پاسخ تمرکز دارد.
+series|Invincible|شکست‌ناپذیر|2021|اکشن|8.7|Robert Kirkman|Steven Yeun, J.K. Simmons|3 فصل|مارک گریسون نوجوانی است که پدرش یکی از مشهورترین ابرقهرمانان جهان محسوب می‌شود. او منتظر است توانایی‌های ویژه خودش را کشف کند و وارد دنیای قهرمانان شود. با آغاز تمرین‌ها و تجربه‌های تازه، مارک متوجه می‌شود مسئولیت قهرمان بودن بسیار پیچیده‌تر از چیزی است که تصور می‌کرد. سریال داستان رشد، خانواده، هویت و تفاوت میان تصویر عمومی قهرمانان و واقعیت زندگی آن‌هاست.
+series|Succession|وراثت|2018|درام|8.8|Jesse Armstrong|Brian Cox, Jeremy Strong|4 فصل|خانواده روی یکی از بزرگ‌ترین شرکت‌های رسانه‌ای جهان را اداره می‌کنند و پدر خانواده، لوگان، شخصیتی قدرتمند و تأثیرگذار است. با بالا رفتن سن او، بحث جانشینی و آینده شرکت به مسئله اصلی اعضای خانواده تبدیل می‌شود. فرزندان هرکدام دیدگاه و برنامه خاصی برای مدیریت امپراتوری دارند و روابط شخصی آن‌ها با رقابت کاری گره می‌خورد. سریال نگاهی دقیق و گاهی طنزآمیز به قدرت، ثروت، خانواده و سیاست‌های پشت پرده شرکت‌ها دارد.
+series|Better Call Saul|بهتره با سال تماس بگیری|2015|جنایی|9.0|Vince Gilligan|Bob Odenkirk, Rhea Seehorn|6 فصل|جیمی مک‌گیل وکیلی است که تلاش می‌کند در دنیای حقوقی جایگاه مناسبی برای خودش پیدا کند. او با وجود استعداد و هوش بالا، بارها با مشکلات مالی، رقابت حرفه‌ای و گذشته شخصی‌اش روبه‌رو می‌شود. آشنایی با افراد مختلف و انتخاب‌های شغلی او به‌تدریج مسیر شخصیتش را تغییر می‌دهد. سریال داستانی آرام و دقیق درباره جاه‌طلبی، هویت، اخلاق و شکل‌گیری شخصیتی پیچیده است.
+series|The Queen's Gambit|گامبی وزیر|2020|درام|8.5|Scott Frank|Anya Taylor-Joy, Thomas Brodie-Sangster|1 فصل|بث هارمون دختری بااستعداد است که در کودکی با بازی شطرنج آشنا می‌شود و خیلی زود توانایی قابل‌توجهی در این رشته نشان می‌دهد. او در مسیر پیشرفت خود با مسابقات مهم، رقیبان قدرتمند و فشارهای زندگی شخصی روبه‌رو می‌شود. هرچه سطح رقابت بالاتر می‌رود، مدیریت احساسات و تصمیم‌هایش اهمیت بیشتری پیدا می‌کند. این مینی‌سریال درباره استعداد، تمرین، استقلال و بهای رسیدن به موفقیت است.
+series|Mr. Robot|آقای ربات|2015|درام|8.5|Sam Esmail|Rami Malek, Christian Slater|4 فصل|الیوت آلدرسون برنامه‌نویس و متخصص امنیت سایبری است که در یک شرکت فناوری کار می‌کند و زندگی اجتماعی محدودی دارد. او مهارت‌های فنی بالایی دارد، اما با مسائل شخصی و نگاه پیچیده‌ای به جامعه دست‌وپنجه نرم می‌کند. آشنایی با گروهی به نام اف‌سوسایتی او را وارد ماجرایی بزرگ درباره شرکت‌های قدرتمند و ساختار اقتصادی می‌کند. سریال ترکیبی از فناوری، روان‌شناسی، هویت و پرسش‌های اجتماعی است.
+series|The Office|اداره|2005|کمدی|9.0|Greg Daniels|Steve Carell, John Krasinski|9 فصل|داستان در شعبه‌ای از یک شرکت فروش کاغذ می‌گذرد و زندگی روزمره کارکنان آن را دنبال می‌کند. مدیر شرکت، مایکل اسکات، تلاش می‌کند محیطی دوستانه ایجاد کند، اما رفتارهای غیرمعمول او اغلب موقعیت‌های خنده‌داری به وجود می‌آورد. روابط همکاران، رقابت‌های کوچک و اتفاقات ساده اداری به محور داستان تبدیل می‌شوند. سریال با سبک مستندنما، طنزی درباره محیط کار، دوستی و شخصیت‌های کاملاً متفاوت ارائه می‌دهد.
+series|Severance|جداسازی|2022|علمی تخیلی|8.7|Dan Erickson|Adam Scott, Britt Lower|2 فصل|در شرکتی مرموز، گروهی از کارمندان روشی پزشکی را پذیرفته‌اند که خاطرات کاری و شخصی آن‌ها را از هم جدا می‌کند. آن‌ها در محل کار هیچ خاطره‌ای از زندگی بیرون ندارند و خارج از شرکت نیز چیزی از اتفاقات ساعات کاری به یاد نمی‌آورند. مارک و همکارانش به‌تدریج درباره ماهیت شرکت و دلیل این روش پرسش‌هایی مطرح می‌کنند. سریال معمایی درباره هویت، کنترل، کار و مرزهای زندگی شخصی است.
+series|The Walking Dead|مردگان متحرک|2010|ترسناک|8.1|Frank Darabont|Andrew Lincoln, Norman Reedus|11 فصل|پس از گسترش یک بحران جهانی، گروهی از انسان‌ها تلاش می‌کنند در دنیایی که نظم اجتماعی آن فروپاشیده دوام بیاورند. ریک گرایمز پس از بیدار شدن از یک دوره بیهوشی، به دنبال خانواده خود می‌گردد و با بازماندگان مختلف آشنا می‌شود. گروه در مسیر پیدا کردن پناهگاه با چالش‌های طبیعی و اختلافات انسانی روبه‌رو می‌شود. سریال بیش از هر چیز درباره جامعه، اعتماد، رهبری و انتخاب‌های دشوار در شرایط بحرانی است.
+series|Suits|کت‌وشلواری‌ها|2011|درام|8.4|Aaron Korsh|Gabriel Macht, Patrick J. Adams|9 فصل|هاروی اسپکتر وکیل موفقی در یک شرکت حقوقی بزرگ نیویورک است که به دنبال همکار جدیدی می‌گردد. او با مایک راس آشنا می‌شود؛ جوانی با حافظه‌ای فوق‌العاده و استعداد حقوقی که مسیر معمول تحصیل و ورود به حرفه وکالت را طی نکرده است. همکاری آن‌ها پرونده‌های دشوار و موقعیت‌های پیچیده‌ای به همراه دارد. سریال درباره رقابت حرفه‌ای، اعتماد، دوستی و زندگی در دنیای پرسرعت شرکت‌های حقوقی است.
+series|Lost|گمشده|2004|معمایی|8.3|J.J. Abrams|Matthew Fox, Evangeline Lilly|6 فصل|پس از سقوط هواپیمایی مسافربری، گروهی از بازماندگان در جزیره‌ای دورافتاده گرفتار می‌شوند. آن‌ها باید برای تهیه غذا، ساخت پناهگاه و حفظ امنیت خود با یکدیگر همکاری کنند. اما جزیره فقط یک محیط طبیعی ناشناخته نیست و اتفاقات عجیب و نشانه‌هایی غیرقابل توضیح در آن دیده می‌شود. سریال با روایت زندگی گذشته شخصیت‌ها، رازهای جزیره و روابط میان بازماندگان را به‌تدریج آشکار می‌کند.
+series|Vikings|وایکینگ‌ها|2013|تاریخی|8.5|Michael Hirst|Travis Fimmel, Katheryn Winnick|6 فصل|راگنار لاثبروک جنگجویی کنجکاو و جاه‌طلب است که به دنبال کشف سرزمین‌های تازه و گسترش نفوذ مردم خود است. سفرهای دریایی و برخورد با جوامع دیگر، زندگی او و خانواده‌اش را تغییر می‌دهد. در کنار ماجراجویی‌ها، رقابت‌های داخلی، باورهای مذهبی و مسائل سیاسی نیز نقش مهمی دارند. سریال با الهام از تاریخ و افسانه‌های اسکاندیناوی، دنیای وایکینگ‌ها و مسیر قدرت گرفتن رهبران آن‌ها را به تصویر می‌کشد.
+series|Dexter|دکستر|2006|جنایی|8.6|James Manos Jr.|Michael C. Hall, Jennifer Carpenter|8 فصل|دکستر مورگان متخصص بررسی آثار خون در پلیس میامی است و در ظاهر زندگی آرام و منظمی دارد. اما او رازی بزرگ را پنهان می‌کند و زندگی شخصی‌اش با شغل رسمی او تفاوت زیادی دارد. دکستر تلاش می‌کند میان نقش اجتماعی، روابط خانوادگی و بخش پنهان شخصیت خود تعادل برقرار کند. سریال یک درام جنایی شخصیت‌محور درباره هویت، اخلاق، رازها و پیچیدگی‌های ذهن انسان است.
+series|House M.D.|دکتر هاوس|2004|درام|8.7|David Shore|Hugh Laurie, Omar Epps|8 فصل|دکتر گرگوری هاوس پزشکی بسیار باهوش و متخصص تشخیص بیماری‌های پیچیده است. او همراه گروهی از پزشکان جوان، پرونده‌هایی را بررسی می‌کند که تشخیص آن‌ها برای دیگران دشوار بوده است. روش کاری هاوس متفاوت و گاهی بحث‌برانگیز است و روابط او با همکاران و بیماران همیشه ساده پیش نمی‌رود. سریال ترکیبی از معماهای پزشکی، طنز تلخ و بررسی شخصیت انسانی است.
+series|The Bear|خرس|2022|درام|8.5|Christopher Storer|Jeremy Allen White, Ayo Edebiri|3 فصل|کارمی برزاتو سرآشپزی حرفه‌ای است که پس از یک اتفاق خانوادگی، اداره رستوران کوچک خانواده‌اش را بر عهده می‌گیرد. او تلاش می‌کند کیفیت غذا و مدیریت مجموعه را بهتر کند، اما با مشکلات مالی، اختلاف کارکنان و فشارهای روزانه روبه‌رو می‌شود. ورود روش‌های تازه و تغییرات مدیریتی، روابط اعضای تیم را تحت تأثیر قرار می‌دهد. سریال درباره آشپزی، خانواده، فشار کاری، همکاری و تلاش برای ساختن آینده‌ای بهتر است.
+`;
+
+const COLORS=[
+ ["#70502b","#171c29"],["#174c69","#101a2b"],
+ ["#68404b","#19172a"],["#315a51","#111d29"],
+ ["#55518a","#16172b"],["#754c29","#171a25"],
+ ["#28566d","#171d2b"],["#65436f","#17182a"],
+ ["#77602c","#1b202b"],["#244e76","#151b29"]
+];
+
+const ITEMS=DATA.trim().split("\n")
+ .map(line=>line.trim())
+ .filter(line=>line && !line.startsWith("/*"))
+ .map((line,index)=>{
+  const p=line.split("|");
+  return {
+   id:index+1,type:p[0],title:p[1],fa:p[2],
+   year:Number(p[3]),genre:p[4],rating:Number(p[5]),
+   director:p[6],cast:p[7],runtime:p[8],desc:p.slice(9).join("|")
+  };
+ });
+
+let currentType="all";
+let slideIndex=0;
+let slideTimer=null;
+let activeDetailId=null;
+
+let favorites=[];
+try{
+ favorites=JSON.parse(localStorage.getItem("nexoFavorites")||"[]");
+ if(!Array.isArray(favorites))favorites=[];
+}catch(e){favorites=[]}
+
+function safe(value){
+ return String(value).replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",
+  '"':"&quot;","'":"&#039;"
+ }[c]));
+}
+
+function palette(item){return COLORS[item.id%COLORS.length]}
+
+function isFavorite(id){return favorites.includes(id)}
+
+function setupGenres(){
+ const genres=[...new Set(ITEMS.map(x=>x.genre))].sort();
+ const select=document.getElementById("genre");
+ genres.forEach(g=>{
+  const option=document.createElement("option");
+  option.value=g;option.textContent=g;
+  select.appendChild(option);
+ });
+}
+
+function chooseType(type){
+ currentType=type;
+ document.querySelectorAll(".tab").forEach(t=>{
+  t.classList.toggle("active",t.dataset.type===type);
+ });
+ render();
+}
+
+function render(){
+ const q=document.getElementById("search").value.trim().toLowerCase();
+ const genre=document.getElementById("genre").value;
+ const sort=document.getElementById("sort").value;
+
+ let list=ITEMS.filter(x=>{
+  const typeOK=
+   currentType==="all" ||
+   x.type===currentType ||
+   (currentType==="favorites" && isFavorite(x.id));
+
+  const genreOK=genre==="all"||x.genre===genre;
+  const text=(x.title+" "+x.fa+" "+x.genre+" "+x.year).toLowerCase();
+  return typeOK&&genreOK&&text.includes(q);
+ });
+
+ if(sort==="rating")list.sort((a,b)=>b.rating-a.rating);
+ if(sort==="year")list.sort((a,b)=>b.year-a.year);
+ if(sort==="oldest")list.sort((a,b)=>a.year-b.year);
+ if(sort==="az")list.sort((a,b)=>a.fa.localeCompare(b.fa,"fa"));
+
+ document.getElementById("resultCount").textContent=list.length+" عنوان پیدا شد";
+
+ const grid=document.getElementById("grid");
+ if(!list.length){
+  grid.innerHTML='<div class="empty">هنوز اثری در این بخش وجود ندارد یا نتیجه‌ای پیدا نشد.</div>';
+  return;
+ }
+
+ grid.innerHTML=list.map(x=>{
+  const c=palette(x);
+  return `
+  <article class="card" onclick="openDetails(${x.id})">
+   <div class="poster" style="--c1:${c[0]};--c2:${c[1]}">
+    <span class="type-label">${x.type==="movie"?"فیلم":"سریال"}</span>
+    <div class="poster-name">${safe(x.fa)}</div>
+    <span class="rating">★ ${x.rating}</span>
+   </div>
+   <div class="card-info">
+    <h3>${safe(x.title)}</h3>
+    <div class="meta"><span>${x.year}</span><span>${x.type==="movie"?"فیلم":"سریال"}</span></div>
+    <div class="genre">${safe(x.genre)}</div>
+   </div>
+  </article>`;
+ }).join("");
+}
+
+/* FEATURED SLIDER */
+const featuredIds=[11,41,21,66,38,44,56,53];
+
+function renderSlide(){
+ const item=ITEMS.find(x=>x.id===featuredIds[slideIndex]);
+ if(!item)return;
+ const c=palette(item);
+
+ document.getElementById("showcaseSlide").innerHTML=`
+  <div class="showcase-poster" style="--cover1:${c[0]};--cover2:${c[1]}">
+   ${safe(item.fa)}
+  </div>
+  <div class="showcase-info">
+   <div class="tag">✦ انتخاب ویژه NEXO</div>
+   <h3>${safe(item.fa)}</h3>
+   <div class="showcase-meta">${item.year}　 |　 ★ ${item.rating}　 |　 ${item.type==="movie"?"فیلم":"سریال"}</div>
+   <p>${safe(item.desc)}</p>
+   <div class="showcase-actions">
+    <button class="view" onclick="openDetails(${item.id})">مشاهده جزئیات</button>
+    <button class="next" onclick="moveSlide(1)">اثر بعدی ←</button>
+   </div>
+  </div>`;
+
+ const box=document.getElementById("showcaseBox");
+ box.style.setProperty("--glow",c[0]+"88");
+ box.style.setProperty("--cover1",c[0]);
+ box.style.setProperty("--cover2",c[1]);
+
+ document.getElementById("dots").innerHTML=featuredIds.map((_,i)=>
+  `<span class="dot ${i===slideIndex?"active":""}"></span>`
+ ).join("");
+}
+
+function moveSlide(direction){
+ slideIndex=(slideIndex+direction+featuredIds.length)%featuredIds.length;
+ renderSlide();
+ restartSlider();
+}
+
+function restartSlider(){
+ clearInterval(slideTimer);
+ slideTimer=setInterval(()=>{
+  slideIndex=(slideIndex+1)%featuredIds.length;
+  renderSlide();
+ },5000);
+}
+
+/* FAVORITES */
+function saveFavorites(){
+ try{
+  localStorage.setItem("nexoFavorites",JSON.stringify(favorites));
+ }catch(e){}
+}
+
+function toggleFavorite(){
+ if(activeDetailId===null)return;
+
+ if(isFavorite(activeDetailId)){
+  favorites=favorites.filter(id=>id!==activeDetailId);
+ }else{
+  favorites.push(activeDetailId);
+ }
+
+ saveFavorites();
+ updateFavoriteButton();
+ render();
+}
+
+function updateFavoriteButton(){
+ const btn=document.getElementById("favoriteBtn");
+ if(!btn || activeDetailId===null)return;
+
+ if(isFavorite(activeDetailId)){
+  btn.classList.add("saved");
+  btn.textContent="★ حذف از علاقه‌مندی‌ها";
+ }else{
+  btn.classList.remove("saved");
+  btn.textContent="☆ افزودن به علاقه‌مندی‌ها";
+ }
+}
+
+/* DETAILS */
+function openDetails(id){
+ const x=ITEMS.find(item=>item.id===id);
+ if(!x)return;
+
+ activeDetailId=id;
+ const c=palette(x);
+
+ document.getElementById("detailCover").style.background=
+  `linear-gradient(120deg,${c[0]},${c[1]})`;
+
+ document.getElementById("detailType").textContent=
+  x.type==="movie"?"MOVIE":"TV SERIES";
+
+ document.getElementById("detailTitle").textContent=x.title;
+ document.getElementById("detailFa").textContent=x.fa;
+ document.getElementById("detailRating").textContent="★ "+x.rating+" / 10";
+ document.getElementById("detailDesc").textContent=x.desc;
+
+ const fields=[
+  ["نوع اثر",x.type==="movie"?"فیلم سینمایی":"سریال"],
+  ["سال انتشار",x.year],
+  ["ژانر",x.genre],
+  ["کارگردان / سازنده",x.director],
+  ["بازیگران",x.cast],
+  [x.type==="movie"?"مدت زمان":"تعداد فصل",x.runtime]
+ ];
+
+ document.getElementById("detailGrid").innerHTML=fields.map(f=>`
+  <div class="info-row">
+   <small>${safe(f[0])}</small>
+   <strong>${safe(f[1])}</strong>
+  </div>
+ `).join("");
+
+ updateFavoriteButton();
+ document.getElementById("modal").classList.add("show");
+ document.body.style.overflow="hidden";
+}
+
+function closeDetails(){
+ document.getElementById("modal").classList.remove("show");
+ document.body.style.overflow="";
+ activeDetailId=null;
+}
+
+function outsideClose(e){
+ if(e.target.id==="modal")closeDetails();
+}
+
+document.addEventListener("keydown",e=>{
+ if(e.key==="Escape")closeDetails();
+});
+
+/* START */
+document.getElementById("movieCount").textContent=
+ ITEMS.filter(x=>x.type==="movie").length;
+document.getElementById("seriesCount").textContent=
+ ITEMS.filter(x=>x.type==="series").length;
+document.getElementById("totalCount").textContent=ITEMS.length;
+
+setupGenres();
+render();
+renderSlide();
+restartSlider();
+</script>
+
+</body>
+</html>
